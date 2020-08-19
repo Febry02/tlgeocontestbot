@@ -1,0 +1,13 @@
+[Unit]
+Description=Telegram Geo Contest Bot
+
+[Service]
+Type=simple
+Restart=on-failure
+RestartSec=5
+
+WorkingDirectory=/home/azureuser/tlgeocontestbot
+ExecStart=/bin/bash run.sh
+
+[Install]
+WantedBy=default.target

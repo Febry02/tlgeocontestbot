@@ -1,0 +1,30 @@
+- shortcut: 'en'
+  name: '\u1f1ec\u1f1e7 English'
+
+  start_text: |
+    Hi!
+
+    This is GeoContest bot!
+
+    Type /wallet to add wallet.
+
+    Type /balance to see your GeoCash balance.
+
+  wallet_text: |
+    Please, send me your Geo Wallet.
+
+  wallet_success_text: |
+    Success! Your wallet is {wallet} now.
+
+
+- shortcut: 'hi'
+  name: '\u1f1ee\u1f1f3 Hindi'
+
+  start_text: |
+    Hi!
+
+    This is GeoContest bot!
+
+    Type /wallet to add wallet.
+
+    Type /balance to see your GeoCash balance.
