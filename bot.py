@@ -7,7 +7,6 @@ from telegram.ext import (
 
 import handlers
 import settings
-import database
 
 logging.basicConfig(
     format='%(asctime)s - %(name)s - %(levelname)s - %(message)s', level=logging.DEBUG)
