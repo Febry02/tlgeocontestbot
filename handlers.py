@@ -59,13 +59,12 @@ def provide_wallet(update: Update, context: CallbackContext):
         wallet=wallet
     )
 
-    update.effective_chat.send_text(
-        text=get_loc(user.language).get('wallet_success').format(wallet=wallet)
-    )
+    update.effective_chat.send_text(text=get_loc(user.language).get('wallet_success').format(wallet=wallet))
     return -1
 
+
 def cancel(update: Update, context: CallbackContext):
-    pass
+    return -1
 
 
 def new_chat_members(update: Update, context: CallbackContext):
