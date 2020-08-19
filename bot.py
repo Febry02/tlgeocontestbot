@@ -21,7 +21,7 @@ def main():
 
     dp.add_handler(ConversationHandler(
         entry_points=[
-            CommandHandler(filters=Filters.private, callback=handlers.start_private)
+            CommandHandler(filters=Filters.private, command='start', callback=handlers.start_private)
         ],
         states={
             settings.CONVERSATION_CHOOSE_LANGUAGE: [
@@ -35,7 +35,7 @@ def main():
     ))
     dp.add_handler(ConversationHandler(
         entry_points=[
-            CommandHandler(filters=Filters.private, callback=handlers.wallet)
+            CommandHandler(filters=Filters.private, command='wallet', callback=handlers.wallet)
         ],
         states={
             settings.CONVERSATION_PROVIDE_WALLET: [
