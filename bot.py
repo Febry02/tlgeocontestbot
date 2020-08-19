@@ -5,6 +5,7 @@ from telegram.ext import (
     Updater, Dispatcher, Filters, CommandHandler, MessageHandler, ConversationHandler
 )
 
+import settings
 import handlers
 import settings
 
