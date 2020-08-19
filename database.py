@@ -50,8 +50,8 @@ def make_migrations():
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('create_tables', action="store", dest='create_tables')
-    parser.add_argument('make_migrations', action="store", dest='make_migrations')
+    parser.add_argument('create_tables', action="store")
+    parser.add_argument('make_migrations', action="store")
 
     args = parser.parse_args()
     if args.create_tables:
