@@ -28,14 +28,15 @@ def main():
         ],
         states={
             settings.CONVERSATION_PROVIDE_WALLET: [
-                MessageHandler(filters=Filters.text & ~Filters.command, callback=handlers.provide_wallet)
+                MessageHandler(filters=Filters.regex(settings.WALLET_PATT), callback=handlers.provide_wallet)
             ],
             settings.CONVERSATION_CHOOSE_LANGUAGE: [
                 MessageHandler(filters=Filters.text & ~Filters.command, callback=handlers.choose_language)
             ]
         },
         fallbacks=[
-            MessageHandler(filters=~Filters.text, callback=handlers.cancel)
+            MessageHandler(filters=~Filters.text, callback=handlers.cancel),
+            MessageHandler(filters=~Filters.regex(settings.WALLET_PATT), callback=handlers.cancel)
         ]
     ))
 
