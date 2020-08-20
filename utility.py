@@ -92,3 +92,10 @@ def format_error_message(update: Update, context: CallbackContext):
     text += '<pre>{}</pre>'.format(html.escape(tb))
     return text
 
+
+def format_user_balance(awards, wallet, loc):
+    return loc.get('user_balance_patt').format(
+        user_awards='\n\n'.join([loc.get('user_award_patt') for award in awards]),
+        wallet=wallet
+    )
+

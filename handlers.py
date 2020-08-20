@@ -28,7 +28,7 @@ def choose_language(update: Update, context: CallbackContext):
         log.info('Failed to fetch localization: {}'.format(update.effective_message.text))
         return -1
 
-    user = User.get_or_create(
+    user = User.create_or_get(
         user_id=update.effective_user.id,
         bot_chat_id=update.effective_chat.id
     )
@@ -67,7 +67,17 @@ def balance(update: Update, context: CallbackContext):
         update.effective_chat.send_text(text='I couldn\'t recognize you. Please, send /start.')
         return -1
 
+    wallet = user.wallet
+    if wallet is None:
+        update.effective_chat.send_text(text=get_loc(user.language).get('wallet_not_provided_text'))
+        return -1
 
+    awards = user.retrieve_awards()
+    if awards is None:
+        update.effective_chat.send_text(text=get_loc(user.language).get('balance_empty_text'))
+        return -1
+
+    update.effective_chat.send_text(text=format_user_balance(awards, wallet, get_loc(user.language)))
 
 
 def cancel(update: Update, context: CallbackContext):

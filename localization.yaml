@@ -4,6 +4,12 @@
   error_text: |
     Something has gone wrong. Try again.
 
+  wallet_not_provided_text: |
+    It seems you don't provide us your geo wallet address. Please, send /wallet.
+
+  balance_empty_text: |
+    Oh! It seems you don't have any GeoCash awards in this time.
+
   start_text: |
     Hi!
 
@@ -19,9 +25,28 @@
   wallet_success_text: |
     Success! Your wallet is {wallet} now.
 
+  user_award_patt: |
+    GeoCash: <b>{geocash}</b>
+    Description: <i>{description}</i>
+
+  user_balance_patt: |
+    Your linked wallet: {wallet}
+
+    Your current geo balance:
+    <pre>{user_awards}</pre>
+
 
 - shortcut: 'hi'
   name: 'Hindi'
+
+  error_text: |
+    Something has gone wrong. Try again.
+
+  wallet_not_provided_text: |
+    It seems you don't provide us your geo wallet address. Please, send /wallet.
+
+  balance_empty_text: |
+    Oh! It seems you don't have any GeoCash awards in this time.
 
   start_text: |
     Hi!
@@ -31,3 +56,9 @@
     Type /wallet to add wallet.
 
     Type /balance to see your GeoCash balance.
+
+  wallet_text: |
+    Please, send me your Geo Wallet.
+
+  wallet_success_text: |
+    Success! Your wallet is {wallet} now.

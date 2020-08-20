@@ -18,13 +18,12 @@ class User(BaseModel):
     language = peewee.CharField(null=True)
     wallet = peewee.CharField(null=True)
 
-    def get_or_create(user_id, bot_chat_id):
+    def create_or_get(user_id, bot_chat_id):
         user = User.get_or_none(User.user_id == user_id)
         if user is None:
             return User.create(user_id=user_id, bot_chat_id=bot_chat_id, language=None, wallet=None)
 
         return user
-
 
     def update_language(self, new_language):
         self.language = new_language
@@ -34,9 +33,23 @@ class User(BaseModel):
         self.wallet = new_wallet
         self.save()
 
+    def send_award(self, geocash, description=None):
+        return Award.create(user=self, geocash=geocash, description=description)
+
+    def retrieve_awards(self):
+        if self.awards is None:
+            return None
+
+        return [
+            {
+                'geocash': award.geocash,
+                'description': award.description
+            } for award in self.awards
+        ]
+
 
 class Award(BaseModel):
-    user = peewee.ForeignKeyField(User, backref='users')
+    user = peewee.ForeignKeyField(User, backref='awards')
     geocash = peewee.IntegerField()
     description = peewee.CharField(null=True, default=None)
 

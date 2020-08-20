@@ -27,11 +27,11 @@ def main():
             settings.CONVERSATION_CHOOSE_LANGUAGE: [
                 MessageHandler(filters=Filters.text & ~Filters.command, callback=handlers.choose_language)
             ]
+
         },
         fallbacks=[
             MessageHandler(filters=~Filters.text, callback=handlers.cancel)
-        ],
-        conversation_timeout=5
+        ]
     ))
     dp.add_handler(ConversationHandler(
         entry_points=[
@@ -44,8 +44,7 @@ def main():
         },
         fallbacks=[
             MessageHandler(filters=~Filters.text, callback=handlers.cancel)
-        ],
-        conversation_timeout=5
+        ]
     ))
     dp.add_handler(
         MessageHandler(filters=Filters.status_update.new_chat_members, callback=handlers.new_chat_members))
