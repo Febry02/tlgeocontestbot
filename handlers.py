@@ -140,6 +140,7 @@ def tip_confirm(update: Update, context: CallbackContext):
             ),
             geocash
         ),
+        reply_markup=ReplyKeyboardRemove(),
         parse_mode='HTML'
     )
 
