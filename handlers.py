@@ -41,7 +41,7 @@ def choose_language(update: Update, context: CallbackContext):
 def wallet(update: Update, context: CallbackContext):
     user = User.get_or_none(User.user_id == update.effective_user.id)
     if user is None:
-        update.effective_chat.send_text(text='I couldn\'t recognize you. Please, send /start.')
+        update.effective_chat.send_message(text='I couldn\'t recognize you. Please, send /start.')
         return -1
 
     update.effective_chat.send_message(text=get_loc(user.language).get('wallet_text'))
@@ -51,7 +51,7 @@ def wallet(update: Update, context: CallbackContext):
 def provide_wallet(update: Update, context: CallbackContext):
     user = User.get_or_none(User.user_id == update.effective_user.id)
     if user is None:
-        update.effective_chat.send_text(text='I couldn\'t recognize you. Please, send /start.')
+        update.effective_chat.send_message(text='I couldn\'t recognize you. Please, send /start.')
         return -1
 
     wallet = update.effective_message.text
@@ -64,20 +64,20 @@ def provide_wallet(update: Update, context: CallbackContext):
 def balance(update: Update, context: CallbackContext):
     user = User.get_or_none(User.user_id == update.effective_user.id)
     if user is None:
-        update.effective_chat.send_text(text='I couldn\'t recognize you. Please, send /start.')
+        update.effective_chat.send_message(text='I couldn\'t recognize you. Please, send /start.')
         return -1
 
     wallet = user.wallet
     if wallet is None:
-        update.effective_chat.send_text(text=get_loc(user.language).get('wallet_not_provided_text'))
+        update.effective_chat.send_message(text=get_loc(user.language).get('wallet_not_provided_text'))
         return -1
 
     awards = user.retrieve_awards()
     if awards is None:
-        update.effective_chat.send_text(text=get_loc(user.language).get('balance_empty_text'))
+        update.effective_chat.send_message(text=get_loc(user.language).get('balance_empty_text'))
         return -1
 
-    update.effective_chat.send_text(text=format_user_balance(awards, wallet, get_loc(user.language)))
+    update.effective_chat.send_message(text=format_user_balance(awards, wallet, get_loc(user.language)))
 
 
 def cancel(update: Update, context: CallbackContext):
