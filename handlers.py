@@ -1,3 +1,4 @@
+from urllib.response import addbase
 
 from utility import *
 from database import User, Award
@@ -84,6 +85,8 @@ def balance(update: Update, context: CallbackContext):
     update.effective_chat.send_message(
         text=format_user_balance(awards, wallet, get_loc(user.language)), parse_mode='HTML')
 
+
+@administrators_only
 def tip(update: Update, context: CallbackContext):
     username = context.match.groupdict().get('username', None)
     geocash = context.match.groupdict().get('geocash', None)
