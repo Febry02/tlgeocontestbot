@@ -18,36 +18,26 @@ def main():
     dp: Dispatcher = updater.dispatcher
 
     dp.add_error_handler(handlers.error)
+    dp.add_handler(MessageHandler(filters=Filters.status_update.new_chat_members, callback=handlers.new_chat_members))
+    dp.add_handler(CommandHandler(command='balance', callback=handlers.balance))
 
     dp.add_handler(ConversationHandler(
         entry_points=[
-            CommandHandler(filters=Filters.private, command='start', callback=handlers.start)
-        ],
-        states={
-            settings.CONVERSATION_CHOOSE_LANGUAGE: [
-                MessageHandler(filters=Filters.text & ~Filters.command, callback=handlers.choose_language)
-            ]
-
-        },
-        fallbacks=[
-            MessageHandler(filters=~Filters.text, callback=handlers.cancel)
-        ]
-    ))
-    dp.add_handler(ConversationHandler(
-        entry_points=[
+            CommandHandler(filters=Filters.private, command='start', callback=handlers.start),
             CommandHandler(filters=Filters.private, command='wallet', callback=handlers.wallet)
         ],
         states={
             settings.CONVERSATION_PROVIDE_WALLET: [
                 MessageHandler(filters=Filters.text & ~Filters.command, callback=handlers.provide_wallet)
+            ],
+            settings.CONVERSATION_CHOOSE_LANGUAGE: [
+                MessageHandler(filters=Filters.text & ~Filters.command, callback=handlers.choose_language)
             ]
         },
         fallbacks=[
             MessageHandler(filters=~Filters.text, callback=handlers.cancel)
         ]
     ))
-    dp.add_handler(
-        MessageHandler(filters=Filters.status_update.new_chat_members, callback=handlers.new_chat_members))
 
     if settings.DEBUG_MODE:
         updater.start_polling()
