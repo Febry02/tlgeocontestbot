@@ -18,6 +18,14 @@ class User(BaseModel):
     language = peewee.CharField(null=True)
     wallet = peewee.CharField(null=True)
 
+    def get_or_create(user_id, bot_chat_id):
+        user = User.get_or_none(User.user_id == user_id)
+        if user is None:
+            return User.create(user_id=user_id, bot_chat_id=bot_chat_id, language=None, wallet=None)
+
+        return user
+
+
     def update_language(self, new_language):
         self.language = new_language
         self.save()

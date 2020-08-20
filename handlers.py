@@ -61,6 +61,15 @@ def provide_wallet(update: Update, context: CallbackContext):
     return -1
 
 
+def balance(update: Update, context: CallbackContext):
+    user = User.get_or_none(User.user_id == update.effective_user.id)
+    if user is None:
+        update.effective_chat.send_text(text='I couldn\'t recognize you. Please, send /start.')
+        return -1
+
+    wallet =
+
+
 def cancel(update: Update, context: CallbackContext):
     chat = update.effective_chat
     user = User.get_or_none(User.user_id == update.effective_user.id)
