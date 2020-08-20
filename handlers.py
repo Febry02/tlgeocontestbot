@@ -94,7 +94,56 @@ def tip(update: Update, context: CallbackContext):
     geocash = context.match.groupdict().get('geocash', None)
     description = context.match.groupdict().get('description', None)
 
-    log.info(update.effective_chat.get_member(username))
+    user = User.search_by_username(username) or User.search_by_name(username)
+    if user is None:
+        update.effective_chat.send_message('Sorry, user is not founded. Try again.')
+
+    context.user_data['award'] = {
+        'user_id': user.user_id,
+        'geocash': geocash,
+        'description': description,
+    }
+
+    update.effective_chat.send_message(
+        text='Are you sure to send {} GeoCash to {}?'.format(
+            geocash, '[{}](tg://user?id={})'.format(
+                user.username or user.full_name, user.user_id
+            )
+        ),
+        reply_markup=ReplyKeyboardMarkup.from_column(
+            button_column=[KeyboardButton('Yes'), KeyboardButton('No')],
+            resize_keyboard=True
+        ),
+        parse_mode='HTML'
+    )
+
+
+def tip_confirm(update: Update, context: CallbackContext):
+    user_id = context.user_data['award'].get('user_id', None)
+    geocash = context.user_data['award'].get('geocash', None)
+    description = context.user_data['award'].get('description', None)
+
+    if update.message.text == 'No':
+        update.effective_chat.send_message(text='Declined.')
+        return -1
+
+    user = User.get_or_none(User.user_id == user_id)
+    if user is None:
+        update.effective_chat.send_message(text='Something has gone wrong.')
+        return -1
+
+    user.send_award(geocash=geocash, description=description)
+    update.effective_chat.send_message(
+        text='User {} received a {} GeoCash award successfully.'.format(
+            '[{}](tg://user?id={})'.format(
+                user.username or user.full_name, user.user_id
+            ),
+            geocash
+        ),
+        parse_mode='HTML'
+    )
+
+    return -1
 
 
 def cancel(update: Update, context: CallbackContext):

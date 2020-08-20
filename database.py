@@ -31,6 +31,16 @@ class User(BaseModel):
 
         return user
 
+    def search_by_username(text):
+        for user in User.select():
+            if text in user.username:
+                return user
+
+    def search_by_name(text):
+        for user in User.select():
+            if text in user.full_name:
+                return user
+
     def update_language(self, new_language):
         self.language = new_language
         self.save()

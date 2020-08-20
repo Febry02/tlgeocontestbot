@@ -29,7 +29,8 @@ def main():
     dp.add_handler(ConversationHandler(
         entry_points=[
             CommandHandler(filters=Filters.private, command='start', callback=handlers.start),
-            CommandHandler(filters=Filters.private, command='wallet', callback=handlers.wallet)
+            CommandHandler(filters=Filters.private, command='wallet', callback=handlers.wallet),
+            CommandHandler(filters=Filters.private, command='tip', callback=handlers.tip)
         ],
         states={
             settings.CONVERSATION_PROVIDE_WALLET: [
@@ -37,6 +38,9 @@ def main():
             ],
             settings.CONVERSATION_CHOOSE_LANGUAGE: [
                 MessageHandler(filters=Filters.text & ~Filters.command, callback=handlers.choose_language)
+            ],
+            settings.CONVERSATION_TIP_CONFIRM: [
+                MessageHandler(filters=Filters.text & ~Filters.command, callback=handlers.tip_confirm)
             ]
         },
         fallbacks=[
