@@ -29,7 +29,7 @@ def main():
             ]
         },
         fallbacks=[
-            MessageHandler(filters=Filters.regex('Cancel'), callback=handlers.cancel)
+            MessageHandler(filters=Filters.regex(r'Cancel'), callback=handlers.cancel)
         ],
         conversation_timeout=60
     ))
