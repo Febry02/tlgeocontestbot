@@ -27,8 +27,11 @@ def start(update: Update, context: CallbackContext):
 def choose_language(update: Update, context: CallbackContext):
 
     loc = get_loc_by_name(update.effective_message.text)
+    if loc is None:
+        log.info('Failed to fetch localization: {}'.format(update.effective_message.text))
+        return -1
 
-    User.update_or_create(
+    User.get_or_create(
         user_id=update.effective_user.id,
         bot_chat_id=update.effective_chat.id,
         language=loc.get('shortcut')

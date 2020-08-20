@@ -1,5 +1,5 @@
 - shortcut: 'en'
-  name: '\u1f1ec\u1f1e7 English'
+  name: 'English'
 
   start_text: |
     Hi!
@@ -18,7 +18,7 @@
 
 
 - shortcut: 'hi'
-  name: '\u1f1ee\u1f1f3 Hindi'
+  name: 'Hindi'
 
   start_text: |
     Hi!

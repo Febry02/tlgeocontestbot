@@ -18,20 +18,13 @@ class User(BaseModel):
     language = peewee.CharField(null=True)
     wallet = peewee.CharField(null=True)
 
-    def update_or_create(user_id, bot_chat_id=None, language=None, wallet=None):
-        user = User.get_or_none(User.user_id == user_id)
-        if user is None:
-            return User.create(user_id=user_id, bot_chat_id=bot_chat_id, language=language, wallet=wallet)
+    def update_language(self, new_wallet):
+        self.wallet = new_wallet
+        self.save()
 
-        if bot_chat_id:
-            user.bot_chat_id = bot_chat_id
-        if language:
-            user.language = language
-        if bot_chat_id:
-            user.wallet = wallet
-
-        user.save()
-        return user
+    def update_wallet(self, new_language):
+        self.language = new_language
+        self.save()
 
 
 class Award(BaseModel):
