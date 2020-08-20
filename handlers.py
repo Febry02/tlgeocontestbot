@@ -31,7 +31,9 @@ def choose_language(update: Update, context: CallbackContext):
 
     user = User.create_or_get(
         user_id=update.effective_user.id,
-        bot_chat_id=update.effective_chat.id
+        bot_chat_id=update.effective_chat.id,
+        username=update.effective_user.username,
+        full_name=update.effective_user.full_name
     )
 
     user.update_language(loc.get('shortcut'))

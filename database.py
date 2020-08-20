@@ -15,13 +15,19 @@ class BaseModel(peewee.Model):
 class User(BaseModel):
     user_id = peewee.IntegerField()
     bot_chat_id = peewee.IntegerField(null=True)
+    username = peewee.CharField()
+    full_name = peewee.CharField()
     language = peewee.CharField(null=True)
     wallet = peewee.CharField(null=True)
 
-    def create_or_get(user_id, bot_chat_id):
+    def create_or_get(user_id, bot_chat_id, username, full_name):
         user = User.get_or_none(User.user_id == user_id)
         if user is None:
-            return User.create(user_id=user_id, bot_chat_id=bot_chat_id, language=None, wallet=None)
+            return User.create(
+                user_id=user_id, bot_chat_id=bot_chat_id,
+                language=None, wallet=None,
+                username=username, full_name=full_name
+            )
 
         return user
 
