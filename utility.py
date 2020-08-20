@@ -20,7 +20,7 @@ log = logging.getLogger(__name__)
 def load_config(path):
     try:
         with open(path, 'r', encoding='utf8') as f:
-            return yaml.load(f)
+            return yaml.load(f, Loader=yaml.FullLoader)
     except yaml.YAMLError as e:
         log.info('Failed to load {}: {}'.format(path, e))
         return None
@@ -29,7 +29,7 @@ def load_config(path):
 def load_localization(path):
     try:
         with open(path, 'r', encoding='utf8') as f:
-            return yaml.load(f)
+            return yaml.load(f, Loader=yaml.FullLoader)
     except yaml.YAMLError as e:
         log.info('Failed to load {}: {}'.format(path, e))
         return None
