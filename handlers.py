@@ -106,8 +106,9 @@ def tip(update: Update, context: CallbackContext):
 
     update.effective_chat.send_message(
         text='Are you sure to send {} GeoCash to {}?'.format(
-            geocash, '[{}](tg://user?id={})'.format(
-                user.username or user.full_name, user.user_id
+            geocash,
+            '<a href="tg://user?id={}">{}</a>'.format(
+                user.user_id, user.username or user.full_name
             )
         ),
         reply_markup=ReplyKeyboardMarkup.from_column(
@@ -135,8 +136,8 @@ def tip_confirm(update: Update, context: CallbackContext):
     user.send_award(geocash=geocash, description=description)
     update.effective_chat.send_message(
         text='User {} received a {} GeoCash award successfully.'.format(
-            '[{}](tg://user?id={})'.format(
-                user.username or user.full_name, user.user_id
+            '<a href="tg://user?id={}">{}</a>'.format(
+                user.user_id, user.username or user.full_name
             ),
             geocash
         ),
