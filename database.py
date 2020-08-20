@@ -33,6 +33,7 @@ class User(BaseModel):
         user.save()
         return user
 
+
 class Award(BaseModel):
     user = peewee.ForeignKeyField(User, backref='users')
     geocash = peewee.IntegerField()
@@ -50,8 +51,8 @@ def make_migrations():
 
 def main():
     parser = argparse.ArgumentParser()
-    parser.add_argument('create_tables', action="store", required=False)
-    parser.add_argument('make_migrations', action="store", required=False)
+    parser.add_argument('--create_tables',  action="store", required=False)
+    parser.add_argument('--make_migrations', action="store", required=False)
 
     args = parser.parse_args()
     if args.create_tables:

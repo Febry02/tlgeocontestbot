@@ -9,7 +9,7 @@ def error(update: Update, context: CallbackContext):
         chat_id=settings.DEVELOPER_CHAT_ID, text=format_error_message(update, context), parse_mode='HTML')
 
 
-def start_private(update: Update, context: CallbackContext):
+def start(update: Update, context: CallbackContext):
     buttons = [KeyboardButton(text=loc.get('name')) for loc in settings.LOCALIZATION]
     buttons.append(KeyboardButton(text='Cancel'))
 

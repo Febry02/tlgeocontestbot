@@ -21,7 +21,7 @@ def main():
 
     dp.add_handler(ConversationHandler(
         entry_points=[
-            CommandHandler(filters=Filters.private, command='start', callback=handlers.start_private)
+            CommandHandler(filters=Filters.private, command='start', callback=handlers.start)
         ],
         states={
             settings.CONVERSATION_CHOOSE_LANGUAGE: [
