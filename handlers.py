@@ -127,7 +127,7 @@ def tip_confirm(update: Update, context: CallbackContext):
     description = context.user_data['award'].get('description', None)
 
     if update.message.text == 'No':
-        update.effective_chat.send_message(text='Declined.')
+        update.effective_chat.send_message(text='Declined.', reply_markup=ReplyKeyboardRemove())
         return -1
 
     user = User.get_or_none(User.user_id == user_id)
