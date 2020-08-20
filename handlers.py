@@ -59,7 +59,7 @@ def provide_wallet(update: Update, context: CallbackContext):
         wallet=wallet
     )
 
-    update.effective_chat.send_message(text=get_loc(user.language).get('wallet_success').format(wallet=wallet))
+    update.effective_chat.send_message(text=get_loc(user.language).get('wallet_success_text').format(wallet=wallet))
     return -1
 
 

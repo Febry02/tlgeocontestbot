@@ -25,7 +25,7 @@ def main():
         ],
         states={
             settings.CONVERSATION_CHOOSE_LANGUAGE: [
-                MessageHandler(filters=Filters.text, callback=handlers.choose_language)
+                MessageHandler(filters=Filters.text & ~Filters.command, callback=handlers.choose_language)
             ]
         },
         fallbacks=[
@@ -39,7 +39,7 @@ def main():
         ],
         states={
             settings.CONVERSATION_PROVIDE_WALLET: [
-                MessageHandler(filters=Filters.text, callback=handlers.provide_wallet)
+                MessageHandler(filters=Filters.text & ~Filters.command, callback=handlers.provide_wallet)
             ]
         },
         fallbacks=[
