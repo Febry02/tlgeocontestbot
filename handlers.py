@@ -47,7 +47,7 @@ def wallet(update: Update, context: CallbackContext):
         chat.send_text(text='I couldn\'t recognize you. Please, send /start.')
         return -1
 
-    chat.send_text(text=get_loc(user.language).get('wallet_text'))
+    chat.send_message(text=get_loc(user.language).get('wallet_text'))
     return settings.CONVERSATION_PROVIDE_WALLET
 
 
@@ -59,7 +59,7 @@ def provide_wallet(update: Update, context: CallbackContext):
         wallet=wallet
     )
 
-    update.effective_chat.send_text(text=get_loc(user.language).get('wallet_success').format(wallet=wallet))
+    update.effective_chat.send_message(text=get_loc(user.language).get('wallet_success').format(wallet=wallet))
     return -1
 
 
