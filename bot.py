@@ -20,7 +20,7 @@ def main():
     dp.add_error_handler(handlers.error)
     dp.add_handler(MessageHandler(filters=Filters.status_update.new_chat_members, callback=handlers.new_chat_members))
     dp.add_handler(CommandHandler(command='balance', filters=Filters.private, callback=handlers.balance))
-    dp.add_handler(CommandHandler(command='tip', filters=~Filters.private, callback=handlers.balance))
+    dp.add_handler(CommandHandler(command='tip', filters=~Filters.private, callback=handlers.tip))
 
     dp.add_handler(ConversationHandler(
         entry_points=[
