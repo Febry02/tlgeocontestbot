@@ -37,7 +37,7 @@ class User(BaseModel):
         return Award.create(user=self, geocash=geocash, description=description)
 
     def retrieve_awards(self):
-        if self.awards is None:
+        if len(self.awards) == 0:
             return None
 
         return [

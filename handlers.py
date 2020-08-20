@@ -34,7 +34,8 @@ def choose_language(update: Update, context: CallbackContext):
     )
 
     user.update_language(loc.get('shortcut'))
-    update.effective_chat.send_message(text=loc.get('start_text'), reply_markup=ReplyKeyboardRemove())
+    update.effective_chat.send_message(
+        text=loc.get('start_text'), reply_markup=ReplyKeyboardRemove(), parse_mode='HTML')
     return -1
 
 
@@ -44,7 +45,7 @@ def wallet(update: Update, context: CallbackContext):
         update.effective_chat.send_message(text='I couldn\'t recognize you. Please, send /start.')
         return -1
 
-    update.effective_chat.send_message(text=get_loc(user.language).get('wallet_text'))
+    update.effective_chat.send_message(text=get_loc(user.language).get('wallet_text'), parse_mode='HTML')
     return settings.CONVERSATION_PROVIDE_WALLET
 
 
@@ -57,7 +58,8 @@ def provide_wallet(update: Update, context: CallbackContext):
     wallet = update.effective_message.text
     user.update_wallet(wallet)
 
-    update.effective_chat.send_message(text=get_loc(user.language).get('wallet_success_text').format(wallet=wallet))
+    update.effective_chat.send_message(
+        text=get_loc(user.language).get('wallet_success_text').format(wallet=wallet), parse_mode='HTML')
     return -1
 
 
@@ -69,15 +71,18 @@ def balance(update: Update, context: CallbackContext):
 
     wallet = user.wallet
     if wallet is None:
-        update.effective_chat.send_message(text=get_loc(user.language).get('wallet_not_provided_text'))
+        update.effective_chat.send_message(
+            text=get_loc(user.language).get('wallet_not_provided_text'), parse_mode='HTML')
         return -1
 
     awards = user.retrieve_awards()
     if awards is None:
-        update.effective_chat.send_message(text=get_loc(user.language).get('balance_empty_text'))
+        update.effective_chat.send_message(
+            text=get_loc(user.language).get('balance_empty_text'), parse_mode='HTML')
         return -1
 
-    update.effective_chat.send_message(text=format_user_balance(awards, wallet, get_loc(user.language)))
+    update.effective_chat.send_message(
+        text=format_user_balance(awards, wallet, get_loc(user.language)), parse_mode='HTML')
 
 
 def cancel(update: Update, context: CallbackContext):
@@ -88,7 +93,7 @@ def cancel(update: Update, context: CallbackContext):
     else:
         loc = get_loc(user.language)
 
-    chat.send_message(text=loc.get('error_text'), reply_markup=ReplyKeyboardRemove())
+    chat.send_message(text=loc.get('error_text'), reply_markup=ReplyKeyboardRemove(), parse_mode='HTML')
     return -1
 
 
