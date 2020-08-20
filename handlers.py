@@ -84,6 +84,13 @@ def balance(update: Update, context: CallbackContext):
     update.effective_chat.send_message(
         text=format_user_balance(awards, wallet, get_loc(user.language)), parse_mode='HTML')
 
+def tip(update: Update, context: CallbackContext):
+    username = context.match.groupdict().get('username', None)
+    geocash = context.match.groupdict().get('geocash', None)
+    description = context.match.groupdict().get('description', None)
+
+    log.info(update.effective_chat.get_member(username))
+
 
 def cancel(update: Update, context: CallbackContext):
     chat = update.effective_chat

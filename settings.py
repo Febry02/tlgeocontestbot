@@ -17,3 +17,4 @@ CONVERSATION_CHOOSE_LANGUAGE = 1
 CONVERSATION_PROVIDE_WALLET = 2
 
 WALLET_PATT = r'^[0-9a-z]+$'
+TIP_PATT = r'^\/tip\s+(?P<username>[\@\_0-9a-z]+)\s+(?P<geocash>[0-9]+)\s+(?P<description>.*)$'
