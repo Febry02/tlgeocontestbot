@@ -132,7 +132,7 @@ def tip_confirm(update: Update, context: CallbackContext):
 
     user = User.get_or_none(User.user_id == user_id)
     if user is None:
-        update.effective_chat.send_message(text='Something has gone wrong.')
+        update.effective_chat.send_message(text='Something has gone wrong.',  reply_markup=ReplyKeyboardRemove())
         return -1
 
     user.send_award(geocash=geocash, description=description)
