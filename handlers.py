@@ -118,6 +118,8 @@ def tip(update: Update, context: CallbackContext):
         parse_mode='HTML'
     )
 
+    return settings.CONVERSATION_TIP_CONFIRM
+
 
 def tip_confirm(update: Update, context: CallbackContext):
     user_id = context.user_data['award'].get('user_id', None)
