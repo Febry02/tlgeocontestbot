@@ -67,7 +67,7 @@ def balance(update: Update, context: CallbackContext):
         update.effective_chat.send_text(text='I couldn\'t recognize you. Please, send /start.')
         return -1
 
-    wallet =
+
 
 
 def cancel(update: Update, context: CallbackContext):
