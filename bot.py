@@ -29,9 +29,9 @@ def main():
             ]
         },
         fallbacks=[
-            MessageHandler(filters=Filters.regex(r'Cancel'), callback=handlers.cancel)
+            MessageHandler(filters=~Filters.text, callback=handlers.cancel)
         ],
-        conversation_timeout=60
+        conversation_timeout=5
     ))
     dp.add_handler(ConversationHandler(
         entry_points=[
@@ -43,9 +43,9 @@ def main():
             ]
         },
         fallbacks=[
-            MessageHandler(filters=Filters.regex('Cancel'), callback=handlers.cancel)
+            MessageHandler(filters=~Filters.text, callback=handlers.cancel)
         ],
-        conversation_timeout=60
+        conversation_timeout=5
     ))
     dp.add_handler(
         MessageHandler(filters=Filters.status_update.new_chat_members, callback=handlers.new_chat_members))

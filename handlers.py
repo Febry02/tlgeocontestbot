@@ -10,14 +10,11 @@ def error(update: Update, context: CallbackContext):
 
 
 def start(update: Update, context: CallbackContext):
-    buttons = [KeyboardButton(text=loc.get('name')) for loc in settings.LOCALIZATION]
-    buttons.append(KeyboardButton(text='Cancel'))
-
     update.effective_chat.send_message(
         text='Hi! Please, choose a language.',
         reply_markup=ReplyKeyboardMarkup.from_column(
             resize_keyboard=True,
-            button_column=buttons
+            button_column=[KeyboardButton(text=loc.get('name')) for loc in settings.LOCALIZATION]
         )
     )
 
@@ -31,42 +28,48 @@ def choose_language(update: Update, context: CallbackContext):
         log.info('Failed to fetch localization: {}'.format(update.effective_message.text))
         return -1
 
-    User.get_or_create(
+    user = User.get_or_create(
         user_id=update.effective_user.id,
-        bot_chat_id=update.effective_chat.id,
-        language=loc.get('shortcut')
+        bot_chat_id=update.effective_chat.id
     )
 
+    user.update_language(loc.get('shortcut'))
     update.effective_chat.send_message(text=loc.get('start_text'), reply_markup=ReplyKeyboardRemove())
     return -1
 
 
 def wallet(update: Update, context: CallbackContext):
-
-    chat = update.effective_chat
-
     user = User.get_or_none(User.user_id == update.effective_user.id)
     if user is None:
-        chat.send_text(text='I couldn\'t recognize you. Please, send /start.')
+        update.effective_chat.send_text(text='I couldn\'t recognize you. Please, send /start.')
         return -1
 
-    chat.send_message(text=get_loc(user.language).get('wallet_text'))
+    update.effective_chat.send_message(text=get_loc(user.language).get('wallet_text'))
     return settings.CONVERSATION_PROVIDE_WALLET
 
 
 def provide_wallet(update: Update, context: CallbackContext):
+    user = User.get_or_none(User.user_id == update.effective_user.id)
+    if user is None:
+        update.effective_chat.send_text(text='I couldn\'t recognize you. Please, send /start.')
+        return -1
 
     wallet = update.effective_message.text
-    user = User.update_or_create(
-        user_id=update.effective_user.id,
-        wallet=wallet
-    )
+    user.update_wallet(wallet)
 
     update.effective_chat.send_message(text=get_loc(user.language).get('wallet_success_text').format(wallet=wallet))
     return -1
 
 
 def cancel(update: Update, context: CallbackContext):
+    chat = update.effective_chat
+    user = User.get_or_none(User.user_id == update.effective_user.id)
+    if user is None:
+        loc = get_loc('en')
+    else:
+        loc = get_loc(user.language)
+
+    chat.send_message(text=loc.get('error_text'), reply_markup=ReplyKeyboardRemove())
     return -1
 
 

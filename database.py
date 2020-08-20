@@ -18,12 +18,12 @@ class User(BaseModel):
     language = peewee.CharField(null=True)
     wallet = peewee.CharField(null=True)
 
-    def update_language(self, new_wallet):
-        self.wallet = new_wallet
+    def update_language(self, new_language):
+        self.language = new_language
         self.save()
 
-    def update_wallet(self, new_language):
-        self.language = new_language
+    def update_wallet(self, new_wallet):
+        self.wallet = new_wallet
         self.save()
 
 

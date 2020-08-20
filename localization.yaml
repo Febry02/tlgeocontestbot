@@ -1,6 +1,9 @@
 - shortcut: 'en'
   name: 'English'
 
+  error_text: |
+    Something has gone wrong. Try again.
+
   start_text: |
     Hi!
 
