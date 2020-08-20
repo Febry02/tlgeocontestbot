@@ -97,7 +97,7 @@ def format_user_balance(awards, wallet, loc):
     return loc.get('user_balance_patt').format(
         user_awards='\n\n'.join(
             [
-                loc.get('user_award_patt').format(geocash=award.geocash, description=award.description)
+                loc.get('user_award_patt').format(geocash=award.get('geocash'), description=award.get('description'))
                 for award in awards
             ]),
         wallet=wallet
