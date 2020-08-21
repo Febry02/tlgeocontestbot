@@ -29,7 +29,7 @@ def main():
             CommandHandler(filters=Filters.private, command='start', callback=handlers.start),
             CommandHandler(filters=Filters.private, command='wallet', callback=handlers.wallet),
             CommandHandler(
-                filters=Filters.private & Filters.regex(settings.TIP_PATT), command='tip', callback=handlers.tip)
+                filters=Filters.private, command='tip', callback=handlers.tip)
         ],
         states={
             settings.CONVERSATION_PROVIDE_WALLET: [
