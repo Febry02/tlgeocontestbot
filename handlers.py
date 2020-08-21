@@ -90,9 +90,32 @@ def balance(update: Update, context: CallbackContext):
 
 @administrators_only
 def tip(update: Update, context: CallbackContext):
+
+    if context.match is None:
+        update.effective_chat.send_message(
+            text=(
+                'Wrong syntax. Use: <code>\/tip [@username or fullname] [geocash] [description]</code>\n\n'
+                'Example:\n'
+                '<pre>\/tip @saulgdmn 5 bonus\n\/tip denis 10 text</pre>'
+            ),
+            parse_mode='HTML'
+        )
+        return -1
+
     username = context.match.groupdict().get('username', None)
     geocash = context.match.groupdict().get('geocash', None)
     description = context.match.groupdict().get('description', None)
+
+    if username is None or geocash is None:
+        update.effective_chat.send_message(
+            text=(
+                'Wrong syntax. Use: <code>\/tip [@username or fullname] [geocash] [description]</code>\n\n'
+                'Example:\n'
+                '<pre>\/tip @saulgdmn 5 bonus\n\/tip denis 10 text</pre>'
+            ),
+            parse_mode='HTML'
+        )
+        return -1
 
     user = User.search_by_username(username) or User.search_by_name(username)
     if user is None:

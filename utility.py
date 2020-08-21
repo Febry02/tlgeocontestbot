@@ -8,8 +8,7 @@ from functools import wraps
 import yaml
 from telegram import (
     Update, ReplyKeyboardMarkup, ReplyKeyboardRemove, KeyboardButton
-)
-
+    )
 from telegram.ext import CallbackContext
 
 import settings
@@ -95,11 +94,10 @@ def format_error_message(update: Update, context: CallbackContext):
 
 def format_user_balance(awards, wallet, loc):
     return loc.get('user_balance_patt').format(
-        user_awards='\n\n'.join([
+        user_awards='\n'.join([
                 loc.get('user_award_patt').format(geocash=award.get('geocash'), description=award.get('description'))
                 for award in awards
             ]),
         balance=sum([award.get('geocash') for award in awards]),
         wallet=wallet
     )
-
