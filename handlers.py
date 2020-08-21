@@ -106,7 +106,7 @@ def tip(update: Update, context: CallbackContext):
 
     username = m.groupdict().get('username', None)
     geocash = m.groupdict().get('geocash', None)
-    description = mgroupdict().get('description', None)
+    description = m.groupdict().get('description', None)
 
     user = User.search_by_username(username) or User.search_by_name(username)
     if user is None:
