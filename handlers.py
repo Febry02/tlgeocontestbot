@@ -172,7 +172,8 @@ def tip_group(update: Update, context: CallbackContext):
         'description': description,
     }
 
-    update.effective_chat.send_message(
+    context.bot.send_message(
+        chat_id=update.effective_user.id,
         text='Are you sure to send {} GeoCash to {}?'.format(
             geocash,
             '<a href="tg://user?id={}">{}</a>'.format(
