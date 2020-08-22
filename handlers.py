@@ -73,17 +73,16 @@ def balance(update: Update, context: CallbackContext):
         update.effective_chat.send_message(text='I couldn\'t recognize you. Please, send /start.')
         return -1
 
-    wallet = user.wallet
-    if wallet is None:
-        update.effective_chat.send_message(
-            text=get_loc(user.language).get('wallet_not_provided_text'), parse_mode='HTML')
-        return -1
-
     awards = user.retrieve_awards()
     if awards is None:
         update.effective_chat.send_message(
             text=get_loc(user.language).get('balance_empty_text'), parse_mode='HTML')
         return -1
+
+    wallet = user.wallet
+    if wallet is None:
+        update.effective_chat.send_message(
+            text=get_loc(user.language).get('wallet_not_provided_text'), parse_mode='HTML')
 
     update.effective_chat.send_message(
         text=format_user_balance(awards, wallet, get_loc(user.language)), parse_mode='HTML')
@@ -91,8 +90,7 @@ def balance(update: Update, context: CallbackContext):
 
 @administrators_only
 def tip_private(update: Update, context: CallbackContext):
-
-    m = re.match(settings.TIP_PATT, update.effective_message.text)
+    m = re.match(settings.TIP_PRIVATE_PATT, update.effective_message.text)
 
     if m is None:
         update.effective_chat.send_message(
@@ -138,7 +136,57 @@ def tip_private(update: Update, context: CallbackContext):
 
 @administrators_only
 def tip_group(update: Update, context: CallbackContext):
-    log.info(update.to_json())
+
+    if update.effective_message.reply_to_message is None:
+        update.effective_message.delete()
+        return -1
+
+    from_user = update.effective_message.reply_to_message.from_user
+    m = re.match(settings.TIP_GROUP_PATT, update.effective_message.text)
+
+    if m is None:
+        context.bot.send_message(
+            chat_id=update.effective_user.id,
+            text=(
+                'Wrong syntax. Reply to a user\'s message with: <code>/tip [geocash] [description]</code>\n\n'
+                'Example:\n'
+                '<pre>/tip 5 bonus</pre>'
+            ),
+            parse_mode='HTML'
+        )
+        return -1
+
+    geocash = m.groupdict().get('geocash', None)
+    description = m.groupdict().get('description', None)
+
+    user = User.create_or_get(
+        user_id=from_user.id,
+        username=from_user.username,
+        full_name=from_user.full_name,
+        bot_chat_id=from_user.id
+    )
+
+    context.user_data['award'] = {
+        'user_id': user.user_id,
+        'geocash': geocash,
+        'description': description,
+    }
+
+    update.effective_chat.send_message(
+        text='Are you sure to send {} GeoCash to {}?'.format(
+            geocash,
+            '<a href="tg://user?id={}">{}</a>'.format(
+                user.user_id, user.username or user.full_name
+            )
+        ),
+        reply_markup=ReplyKeyboardMarkup.from_column(
+            button_column=[KeyboardButton('Yes'), KeyboardButton('No')],
+            resize_keyboard=True
+        ),
+        parse_mode='HTML'
+    )
+
+    return settings.CONVERSATION_TIP_CONFIRM
 
 
 def tip_confirm(update: Update, context: CallbackContext):
