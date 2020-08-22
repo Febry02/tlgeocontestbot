@@ -18,6 +18,7 @@ def main():
     dp: Dispatcher = updater.dispatcher
 
     dp.add_error_handler(handlers.error)
+
     dp.add_handler(MessageHandler(
         filters=Filters.status_update.new_chat_members, callback=handlers.new_chat_members))
 
@@ -29,7 +30,9 @@ def main():
             CommandHandler(filters=Filters.private, command='start', callback=handlers.start),
             CommandHandler(filters=Filters.private, command='wallet', callback=handlers.wallet),
             CommandHandler(
-                filters=Filters.private, command='tip', callback=handlers.tip)
+                filters=Filters.private, command='tip', callback=handlers.tip_private)
+            CommandHandler(
+                filters=~Filters.private, command='tip', callback=handlers.tip_group)
         ],
         states={
             settings.CONVERSATION_PROVIDE_WALLET: [

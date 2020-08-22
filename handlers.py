@@ -31,14 +31,15 @@ def choose_language(update: Update, context: CallbackContext):
 
     user = User.create_or_get(
         user_id=update.effective_user.id,
-        bot_chat_id=update.effective_chat.id,
         username=update.effective_user.username,
-        full_name=update.effective_user.full_name
+        full_name=update.effective_user.full_name,
+        bot_chat_id=update.effective_chat.id
     )
 
     user.update_language(loc.get('shortcut'))
     update.effective_chat.send_message(
-        text=loc.get('start_text'), reply_markup=ReplyKeyboardRemove(), parse_mode='HTML')
+        text=loc.get('start_text'), reply_markup=ReplyKeyboardRemove(), parse_mode='HTML'
+    )
     return -1
 
 
@@ -89,7 +90,7 @@ def balance(update: Update, context: CallbackContext):
 
 
 @administrators_only
-def tip(update: Update, context: CallbackContext):
+def tip_private(update: Update, context: CallbackContext):
 
     m = re.match(settings.TIP_PATT, update.effective_message.text)
 
@@ -133,6 +134,11 @@ def tip(update: Update, context: CallbackContext):
     )
 
     return settings.CONVERSATION_TIP_CONFIRM
+
+
+@administrators_only
+def tip_group(update: Update, context: CallbackContext):
+    log.info(update.to_json())
 
 
 def tip_confirm(update: Update, context: CallbackContext):

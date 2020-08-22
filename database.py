@@ -20,7 +20,7 @@ class User(BaseModel):
     language = peewee.CharField(null=True)
     wallet = peewee.CharField(null=True)
 
-    def create_or_get(user_id, bot_chat_id, username, full_name):
+    def create_or_get(user_id, username, full_name, bot_chat_id=None):
         user = User.get_or_none(User.user_id == user_id)
         if user is None:
             return User.create(
@@ -29,6 +29,11 @@ class User(BaseModel):
                 username=username, full_name=full_name
             )
 
+        user.bot_chat_id = bot_chat_id
+        user.username = username
+        user.full_name = full_name
+
+        user.save()
         return user
 
     def search_by_username(text):
