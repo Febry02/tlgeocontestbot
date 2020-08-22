@@ -25,6 +25,9 @@
   wallet_success_text: |
     Success! Your wallet is {wallet} now.
 
+  award_received_text: |
+    Congrats! You have been received <b>{geocash} Geocash</b>!
+
   user_award_patt: |
     GeoCash: <b>{geocash}</b>
     Description: <i>{description}</i>

@@ -175,9 +175,11 @@ def tip_group(update: Update, context: CallbackContext):
         full_name=from_user.full_name,
         bot_chat_id=from_user.id
     )
+
     user.send_award(geocash=geocash, description=description)
+
     update.effective_chat.send_message(
-        text='Congrats! User {} received a {} GeoCash award!'.format(
+        text='Congrats! User {} received a <b>{} GeoCash</b> award!'.format(
             '<a href="tg://user?id={}">{}</a>'.format(
                 user.user_id, user.username or user.full_name
             ),
@@ -186,7 +188,13 @@ def tip_group(update: Update, context: CallbackContext):
         reply_markup=ReplyKeyboardRemove(),
         parse_mode='HTML'
     )
+    context.bot.send_message(
+        chat_id=user.bot_chat_id,
+        text=get_loc(user.language).get('award_received_text').format(geocash=geocash),
+        parse_mode='HTML'
+    )
 
+    update.effective_message.delete()
     return -1
 
 
@@ -206,7 +214,7 @@ def tip_confirm(update: Update, context: CallbackContext):
 
     user.send_award(geocash=geocash, description=description)
     update.effective_chat.send_message(
-        text='User {} received a {} GeoCash award successfully.'.format(
+        text='User {} received a <b>{} GeoCash</b> award successfully.'.format(
             '<a href="tg://user?id={}">{}</a>'.format(
                 user.user_id, user.username or user.full_name
             ),

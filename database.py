@@ -25,7 +25,7 @@ class User(BaseModel):
         if user is None:
             return User.create(
                 user_id=user_id, bot_chat_id=bot_chat_id,
-                language=None, wallet=None,
+                language='en', wallet=None,
                 username=username, full_name=full_name
             )
 
