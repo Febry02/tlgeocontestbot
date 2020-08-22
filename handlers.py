@@ -180,7 +180,8 @@ def tip_group(update: Update, context: CallbackContext):
         text='Congrats! User {} received a {} GeoCash award!'.format(
             '<a href="tg://user?id={}">{}</a>'.format(
                 user.user_id, user.username or user.full_name
-            )
+            ),
+            geocash
         ),
         reply_markup=ReplyKeyboardRemove(),
         parse_mode='HTML'
