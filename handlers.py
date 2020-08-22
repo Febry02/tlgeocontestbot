@@ -224,6 +224,12 @@ def tip_confirm(update: Update, context: CallbackContext):
         parse_mode='HTML'
     )
 
+    context.bot.send_message(
+        chat_id=user.bot_chat_id,
+        text=get_loc(user.language).get('award_received_text').format(geocash=geocash),
+        parse_mode='HTML'
+    )
+
     return -1
 
 
