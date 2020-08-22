@@ -138,6 +138,15 @@ def tip_private(update: Update, context: CallbackContext):
 def tip_group(update: Update, context: CallbackContext):
 
     if update.effective_message.reply_to_message is None:
+        context.bot.send_message(
+            chat_id=update.effective_user.id,
+            text=(
+                'Wrong syntax. Reply to a user\'s message with: <code>/tip [geocash] [description]</code>\n\n'
+                'Example:\n'
+                '<pre>/tip 5 bonus</pre>'
+            ),
+            parse_mode='HTML'
+        )
         update.effective_message.delete()
         return -1
 
@@ -154,6 +163,7 @@ def tip_group(update: Update, context: CallbackContext):
             ),
             parse_mode='HTML'
         )
+        update.effective_message.delete()
         return -1
 
     geocash = m.groupdict().get('geocash', None)
@@ -165,29 +175,18 @@ def tip_group(update: Update, context: CallbackContext):
         full_name=from_user.full_name,
         bot_chat_id=from_user.id
     )
-
-    context.user_data['award'] = {
-        'user_id': user.user_id,
-        'geocash': geocash,
-        'description': description,
-    }
-
-    context.bot.send_message(
-        chat_id=update.effective_user.id,
-        text='Are you sure to send {} GeoCash to {}?'.format(
-            geocash,
+    user.send_award(geocash=geocash, description=description)
+    update.effective_chat.send_message(
+        text='Congrats! User {} received a {} GeoCash award!'.format(
             '<a href="tg://user?id={}">{}</a>'.format(
                 user.user_id, user.username or user.full_name
             )
         ),
-        reply_markup=ReplyKeyboardMarkup.from_column(
-            button_column=[KeyboardButton('Yes'), KeyboardButton('No')],
-            resize_keyboard=True
-        ),
+        reply_markup=ReplyKeyboardRemove(),
         parse_mode='HTML'
     )
 
-    return settings.CONVERSATION_TIP_CONFIRM
+    return -1
 
 
 def tip_confirm(update: Update, context: CallbackContext):
