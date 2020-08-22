@@ -30,7 +30,7 @@ def main():
             CommandHandler(filters=Filters.private, command='start', callback=handlers.start),
             CommandHandler(filters=Filters.private, command='wallet', callback=handlers.wallet),
             CommandHandler(
-                filters=Filters.private, command='tip', callback=handlers.tip_private)
+                filters=Filters.private, command='tip', callback=handlers.tip_private),
             CommandHandler(
                 filters=~Filters.private, command='tip', callback=handlers.tip_group)
         ],
