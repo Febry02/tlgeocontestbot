@@ -5,12 +5,12 @@ import settings
 
 log = logging.getLogger(__name__)
 
-def make_transaction(to, value, private_key):
+def make_transaction(to, value, private_key, nonce):
     w3 = Web3(HTTPProvider(settings.NODE_URL))
 
     signed_txn = w3.eth.account.signTransaction(
         dict(
-            nonce=value,
+            nonce=nonce,
             gasPrice=w3.eth.gasPrice,
             gas=100000,
             to=to,
