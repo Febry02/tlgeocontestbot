@@ -233,7 +233,6 @@ def tip_group(update: Update, context: CallbackContext):
         user_id=from_user.id,
         username=from_user.username,
         full_name=from_user.full_name,
-        bot_chat_id=None
     )
 
     user.create_award(geocash=geocash, description=description)
