@@ -33,9 +33,9 @@ def choose_language(update: Update, context: CallbackContext):
         user_id=update.effective_user.id,
         username=update.effective_user.username,
         full_name=update.effective_user.full_name,
-        bot_chat_id=update.effective_chat.id
     )
 
+    user.update_bot_chat_id(update.effective_chat.id)
     user.update_language(loc.get('shortcut'))
     update.effective_chat.send_message(
         text=loc.get('start_text'), reply_markup=ReplyKeyboardRemove(), parse_mode='HTML'
@@ -233,7 +233,6 @@ def tip_group(update: Update, context: CallbackContext):
         user_id=from_user.id,
         username=from_user.username,
         full_name=from_user.full_name,
-        bot_chat_id=None
     )
 
     user.create_award(geocash=geocash, description=description)
