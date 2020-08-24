@@ -18,37 +18,49 @@ def main():
     dp: Dispatcher = updater.dispatcher
 
     dp.add_error_handler(handlers.error)
-
     dp.add_handler(MessageHandler(
         filters=Filters.status_update.new_chat_members, callback=handlers.new_chat_members))
 
     dp.add_handler(CommandHandler(
-        command='balance', filters=Filters.private, callback=handlers.balance))
+        filters=~Filters.private, command='tip', callback=handlers.tip_group))
+    dp.add_handler(CommandHandler(
+        filters=Filters.private, command='balance', callback=handlers.balance))
 
     dp.add_handler(ConversationHandler(
-        entry_points=[
-            CommandHandler(filters=Filters.private, command='start', callback=handlers.start),
-            CommandHandler(filters=Filters.private, command='wallet', callback=handlers.wallet),
-            CommandHandler(
-                filters=Filters.private, command='tip', callback=handlers.tip_private),
-            CommandHandler(
-                filters=~Filters.private, command='tip', callback=handlers.tip_group)
-        ],
+        entry_points=[CommandHandler(filters=Filters.private, command='start', callback=handlers.start)],
         states={
-            settings.CONVERSATION_PROVIDE_WALLET: [
-                MessageHandler(filters=Filters.regex(settings.WALLET_PATT), callback=handlers.provide_wallet)
-            ],
             settings.CONVERSATION_CHOOSE_LANGUAGE: [
                 MessageHandler(filters=Filters.text & ~Filters.command, callback=handlers.choose_language)
             ],
+        },
+        fallbacks=[MessageHandler(filters=~Filters.text, callback=handlers.cancel)]
+    ))
+    dp.add_handler(ConversationHandler(
+        entry_points=[CommandHandler(filters=Filters.private, command='tip', callback=handlers.tip_private)],
+        states={
             settings.CONVERSATION_TIP_CONFIRM: [
                 MessageHandler(filters=Filters.text & ~Filters.command, callback=handlers.tip_confirm)
             ]
         },
-        fallbacks=[
-            MessageHandler(filters=~Filters.text, callback=handlers.cancel),
-            MessageHandler(filters=~Filters.regex(settings.WALLET_PATT), callback=handlers.cancel)
-        ]
+        fallbacks=[MessageHandler(filters=~Filters.text, callback=handlers.cancel)]
+    ))
+    dp.add_handler(ConversationHandler(
+        entry_points=[CommandHandler(filters=Filters.private, command='withdraw', callback=handlers.withdraw)],
+        states={
+            settings.CONVERSATION_WITHDRAW_CONFIRM: [
+                MessageHandler(filters=Filters.text & ~Filters.command, callback=handlers.withdraw_confirm)
+            ]
+        },
+        fallbacks=[MessageHandler(filters=~Filters.text, callback=handlers.cancel)]
+    ))
+    dp.add_handler(ConversationHandler(
+        entry_points=[CommandHandler(filters=Filters.private, command='wallet', callback=handlers.wallet)],
+        states={
+            settings.CONVERSATION_PROVIDE_WALLET: [
+                MessageHandler(filters=Filters.regex(settings.WALLET_PATT), callback=handlers.provide_wallet)
+            ],
+        },
+        fallbacks=[MessageHandler(filters=~Filters.regex(settings.WALLET_PATT), callback=handlers.cancel)]
     ))
 
     if settings.DEBUG_MODE:

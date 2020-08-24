@@ -1,43 +1,51 @@
 - shortcut: 'en'
   name: 'English'
 
-  error_text: |
-    Something has gone wrong. Try again.
-
-  wallet_not_provided_text: |
-    It seems you don't provide us your geo wallet address. Please, send /wallet.
-
-  balance_empty_text: |
-    Oh! It seems you don't have any GeoCash awards in this time.
-
   start_text: |
     Hi!
 
-    This is GeoContest bot!
+    This is GeoContest bot! I help you to store and withdraw won GeoCash!
 
-    Type /wallet to add wallet.
-
-    Type /balance to see your GeoCash balance.
+    Send <b>/wallet</b> to add your wallet address.
+    Send <b>/balance</b> to see your GeoCash balance.
+    Send <b>/withdraw</b> to get earned GeoCash.
 
   wallet_text: |
-    Please, send me your Geo Wallet.
+    Please, send me your wallet address.
 
   wallet_success_text: |
-    Success! Your wallet is {wallet} now.
+    Success! Your wallet is <b>{wallet}</b> now.
 
-  award_received_text: |
-    Congrats! You have been received <b>{geocash} Geocash</b>!
+  withdraw_text: |
+    Are you sure to withdraw <b>{geocash}</b> to <code>{wallet}</code>?
+
+  withdraw_success_text: |
+    Handling your request..
+
+  balance_text: |
+    Your current GeoCash balance: <b>{balance}</b>
+
+    <pre>{user_awards}</pre>
 
   user_award_patt: |
     GeoCash: <b>{geocash}</b>
     Description: <i>{description}</i>
 
-  user_balance_patt: |
-    Your linked wallet: {wallet}
+  award_received_text: |
+    Congrats! You have been received <b>{geocash} GeoCash</b>!
+    Description: <i>{description}</i>
 
-    Your current geo balance: <b>{balance}</b>
+  error_text: |
+    Something has gone wrong. Try again.
 
-    <pre>{user_awards}</pre>
+  could_not_recognize_text: |
+    I couldn\'t recognize you. Please, send <b>/start</b>.
+
+  wallet_not_provided_text: |
+    It seems you don't provide us your wallet address. Please, send <b>/wallet</b>.
+
+  balance_empty_text: |
+    Oh! It seems you don't have any GeoCash awards in this time.
 
 
 - shortcut: 'hi'

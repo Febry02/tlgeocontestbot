@@ -93,11 +93,10 @@ def format_error_message(update: Update, context: CallbackContext):
 
 
 def format_user_balance(awards, wallet, loc):
-    return loc.get('user_balance_patt').format(
+    return loc.get('balance_text').format(
         user_awards='\n'.join([
                 loc.get('user_award_patt').format(geocash=award.get('geocash'), description=award.get('description'))
                 for award in awards
             ]),
-        balance=sum([award.get('geocash') for award in awards]),
-        wallet=wallet
+        balance=sum([award.get('geocash') for award in awards])
     )

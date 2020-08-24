@@ -2,6 +2,7 @@ import re
 
 from utility import *
 from database import User, Award
+import eth
 
 
 def error(update: Update, context: CallbackContext):
@@ -18,7 +19,6 @@ def start(update: Update, context: CallbackContext):
             button_column=[KeyboardButton(text=loc.get('name')) for loc in settings.LOCALIZATION]
         )
     )
-
     return settings.CONVERSATION_CHOOSE_LANGUAGE
 
 
@@ -27,7 +27,7 @@ def choose_language(update: Update, context: CallbackContext):
     loc = get_loc_by_name(update.effective_message.text)
     if loc is None:
         log.info('Failed to fetch localization: {}'.format(update.effective_message.text))
-        return -1
+        loc = get_loc('en')
 
     user = User.create_or_get(
         user_id=update.effective_user.id,
@@ -46,7 +46,9 @@ def choose_language(update: Update, context: CallbackContext):
 def wallet(update: Update, context: CallbackContext):
     user = User.get_or_none(User.user_id == update.effective_user.id)
     if user is None:
-        update.effective_chat.send_message(text='I couldn\'t recognize you. Please, send /start.')
+        update.effective_chat.send_message(
+            text=get_loc('en').get('could_not_recognize_text'), parse_mode='HTML'
+        )
         return -1
 
     update.effective_chat.send_message(text=get_loc(user.language).get('wallet_text'), parse_mode='HTML')
@@ -55,22 +57,20 @@ def wallet(update: Update, context: CallbackContext):
 
 def provide_wallet(update: Update, context: CallbackContext):
     user = User.get_or_none(User.user_id == update.effective_user.id)
-    if user is None:
-        update.effective_chat.send_message(text='I couldn\'t recognize you. Please, send /start.')
-        return -1
-
-    wallet = update.effective_message.text
-    user.update_wallet(wallet)
+    user.update_wallet(update.effective_message.text)
 
     update.effective_chat.send_message(
-        text=get_loc(user.language).get('wallet_success_text').format(wallet=wallet), parse_mode='HTML')
+        text=get_loc(user.language).get('wallet_success_text').format(wallet=user.wallet), parse_mode='HTML'
+    )
     return -1
 
 
 def balance(update: Update, context: CallbackContext):
     user = User.get_or_none(User.user_id == update.effective_user.id)
     if user is None:
-        update.effective_chat.send_message(text='I couldn\'t recognize you. Please, send /start.')
+        update.effective_chat.send_message(
+            text=get_loc('en').get('could_not_recognize_text'), parse_mode='HTML'
+        )
         return -1
 
     awards = user.retrieve_awards()
@@ -79,13 +79,60 @@ def balance(update: Update, context: CallbackContext):
             text=get_loc(user.language).get('balance_empty_text'), parse_mode='HTML')
         return -1
 
+    update.effective_chat.send_message(
+        text=format_user_balance(awards, wallet, get_loc(user.language)), parse_mode='HTML')
+
+
+def withdraw(update: Update, context: CallbackContext):
+    user = User.get_or_none(User.user_id == update.effective_user.id)
+    if user is None:
+        update.effective_chat.send_message(
+            text=get_loc('en').get('could_not_recognize_text'), parse_mode='HTML'
+        )
+        return -1
+
+    geocash = user.get_geocash()
+    if geocash == 0:
+        update.effective_chat.send_message(
+            text=get_loc(user.language).get('balance_empty_text'), parse_mode='HTML')
+        return -1
+
     wallet = user.wallet
     if wallet is None:
         update.effective_chat.send_message(
             text=get_loc(user.language).get('wallet_not_provided_text'), parse_mode='HTML')
+        return -1
 
     update.effective_chat.send_message(
-        text=format_user_balance(awards, wallet, get_loc(user.language)), parse_mode='HTML')
+        text=get_loc(user.language).get('withdraw_text').format(
+            geocash=geocash,
+            wallet=user.wallet
+        )
+    )
+
+    return settings.CONVERSATION_WITHDRAW_CONFIRM
+
+
+def withdraw_confirm(update: Update, context: CallbackContext):
+    if update.message.text != 'Yes':
+        update.effective_chat.send_message(text='Declined.', reply_markup=ReplyKeyboardRemove())
+        return -1
+
+    user = User.get_or_none(User.user_id == update.effective_user.id)
+    if user is None:
+        update.effective_chat.send_message(text='Something has gone wrong.',  reply_markup=ReplyKeyboardRemove())
+        return -1
+
+    geocash = User.get_geocash()
+    wallet = User.wallet
+
+    eth.make_transaction(to=wallet, value=geocash, private_key=settings.PRIVATE_KEY)
+
+    update.effective_chat.send_message(
+        text=get_loc(user.language).get('withdraw_success_text'),
+        parse_mode='HTML'
+    )
+    return -1
 
 
 @administrators_only
@@ -203,7 +250,7 @@ def tip_confirm(update: Update, context: CallbackContext):
     geocash = context.user_data['award'].get('geocash', None)
     description = context.user_data['award'].get('description', None)
 
-    if update.message.text == 'No':
+    if update.message.text != 'Yes':
         update.effective_chat.send_message(text='Declined.', reply_markup=ReplyKeyboardRemove())
         return -1
 

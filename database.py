@@ -54,8 +54,11 @@ class User(BaseModel):
         self.wallet = new_wallet
         self.save()
 
-    def send_award(self, geocash, description=None):
+    def create_award(self, geocash, description=None):
         return Award.create(user=self, geocash=geocash, description=description)
+
+    def drop_awards(self):
+        Award.delete().where(Award.user == self)
 
     def retrieve_awards(self):
         if len(self.awards) == 0:
@@ -67,6 +70,12 @@ class User(BaseModel):
                 'description': award.description
             } for award in self.awards
         ]
+
+    def get_geocash(self):
+        if len(self.awards) == 0:
+            return None
+
+        return sum([award.geocash for award in self.awards])
 
 
 class Award(BaseModel):
