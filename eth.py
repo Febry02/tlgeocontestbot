@@ -8,7 +8,7 @@ def make_transaction(to, value, private_key):
 
     signed_txn = w3.eth.account.signTransaction(
         dict(
-            nonce=w3.eth.getTransactionCount(w3.eth.coinbase),
+            nonce='0',
             gasPrice=w3.eth.gasPrice,
             gas=100000,
             to=to,
