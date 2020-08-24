@@ -20,6 +20,6 @@ CONVERSATION_PROVIDE_WALLET = 2
 CONVERSATION_TIP_CONFIRM = 3
 CONVERSATION_WITHDRAW_CONFIRM = 4
 
-WALLET_PATT = r'^[0-9a-z]+$'
+WALLET_PATT = r'^[0-9a-zA-Z]+$'
 TIP_PRIVATE_PATT = r'^\/tip\s+\@?(?P<username>[\d\w\s]+)\s+(?P<geocash>[0-9]+)\s+(?P<description>.*)$'
 TIP_GROUP_PATT = r'^\/tip\s+(?P<geocash>[0-9]+)\s+(?P<description>.*)$'

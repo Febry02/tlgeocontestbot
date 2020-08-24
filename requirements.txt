@@ -1,3 +1,4 @@
 python-telegram-bot
 peewee
 web3
+pyyaml
