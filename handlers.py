@@ -130,7 +130,7 @@ def withdraw_confirm(update: Update, context: CallbackContext):
     result = eth.make_transaction(
         to=wallet, value=0, private_key=settings.PRIVATE_KEY, nonce=user.user_id
     )
-    if result is not True:
+    if isinstance(result, Exception):
         update.effective_chat.send_message(
             text=get_loc(user.language).get('withdraw_failed_text'),
             reply_markup=ReplyKeyboardRemove(),
@@ -141,7 +141,7 @@ def withdraw_confirm(update: Update, context: CallbackContext):
     user.drop_awards()
 
     update.effective_chat.send_message(
-        text=get_loc(user.language).get('withdraw_success_text'),
+        text=get_loc(user.language).get('withdraw_success_text').format(hash=result),
         reply_markup=ReplyKeyboardRemove(),
         parse_mode='HTML'
     )

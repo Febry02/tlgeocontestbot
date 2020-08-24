@@ -24,5 +24,4 @@ def make_transaction(to, value, private_key, nonce):
         result = w3.eth.sendRawTransaction(signed_txn.rawTransaction)
     except Exception as e:
         return e
-
-    return True
+    return result
