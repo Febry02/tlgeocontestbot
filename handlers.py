@@ -127,7 +127,7 @@ def withdraw_confirm(update: Update, context: CallbackContext):
     geocash = user.get_geocash()
     wallet = user.wallet
 
-    result = eth.make_transaction(to=wallet, value=geocash, private_key=settings.PRIVATE_KEY)
+    result = eth.make_transaction(to=wallet, value=0, private_key=settings.PRIVATE_KEY)
     if result is not True:
         update.effective_chat.send_message(
             text=get_loc(user.language).get('withdraw_failed_text'),
