@@ -17,7 +17,7 @@
     Success! Your wallet is <b>{wallet}</b> now.
 
   withdraw_text: |
-    Are you sure to withdraw <b>{geocash}</b> to <code>{wallet}</code>?
+    Are you sure to withdraw <b>{geocash}</b> GeoCash to <code>{wallet}</code>?
 
   withdraw_success_text: |
     Handling your request..
