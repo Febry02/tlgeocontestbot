@@ -221,7 +221,7 @@ def tip_group(update: Update, context: CallbackContext):
         bot_chat_id=from_user.id
     )
 
-    user.send_award(geocash=geocash, description=description)
+    user.create_award(geocash=geocash, description=description)
 
     update.effective_chat.send_message(
         text='Congrats! User {} received a <b>{} GeoCash</b> award!'.format(
