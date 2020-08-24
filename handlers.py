@@ -92,7 +92,7 @@ def withdraw(update: Update, context: CallbackContext):
         return -1
 
     geocash = user.get_geocash()
-    if geocash == 0:
+    if geocash is None:
         update.effective_chat.send_message(
             text=get_loc(user.language).get('balance_empty_text'), parse_mode='HTML')
         return -1
@@ -107,7 +107,8 @@ def withdraw(update: Update, context: CallbackContext):
         text=get_loc(user.language).get('withdraw_text').format(
             geocash=geocash,
             wallet=user.wallet
-        )
+        ),
+        parse_mode='HTML'
     )
 
     return settings.CONVERSATION_WITHDRAW_CONFIRM
