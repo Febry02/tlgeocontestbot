@@ -108,6 +108,7 @@ def withdraw(update: Update, context: CallbackContext):
             geocash=geocash,
             wallet=user.wallet
         ),
+        reply_markup=ReplyKeyboardMarkup.from_column([KeyboardButton('Yes'), KeyboardButton('No')]),
         parse_mode='HTML'
     )
 
@@ -120,8 +121,8 @@ def withdraw_confirm(update: Update, context: CallbackContext):
         return -1
 
     user = User.get_or_none(User.user_id == update.effective_user.id)
-    geocash = User.get_geocash()
-    wallet = User.wallet
+    geocash = user.get_geocash()
+    wallet = user.wallet
 
     eth.make_transaction(to=wallet, value=geocash, private_key=settings.PRIVATE_KEY)
     user.drop_awards()
