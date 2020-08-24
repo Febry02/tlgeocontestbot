@@ -1,18 +1,18 @@
+import logging
 from web3 import Web3, HTTPProvider
 
 import settings
 
+log = logging.getLogger(__name__)
 
 def make_transaction(to, value, private_key):
     w3 = Web3(HTTPProvider(settings.NODE_URL))
-
-    print(w3.eth.gasPrice)
 
     signed_txn = w3.eth.account.signTransaction(
         dict(
             nonce=value,
             gasPrice=w3.eth.gasPrice,
-            gas=1,
+            gas=100000,
             to=to,
             value=value,
             data=b''
@@ -20,5 +20,9 @@ def make_transaction(to, value, private_key):
         private_key,
     )
 
-    result = w3.eth.sendRawTransaction(signed_txn.rawTransaction)
-    print(result)
+    try:
+        result = w3.eth.sendRawTransaction(signed_txn.rawTransaction)
+    except Exception as e:
+        return e
+
+    return True

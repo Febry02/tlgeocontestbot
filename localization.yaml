@@ -20,7 +20,10 @@
     Are you sure to withdraw <b>{geocash}</b> GeoCash to <code>{wallet}</code>?
 
   withdraw_success_text: |
-    Handling your request..
+    Success!
+
+  withdraw_failed_text: |
+    Something has gone wrong. Administrators have been notified about this issue.
 
   balance_text: |
     Your current GeoCash balance: <b>{balance}</b>
