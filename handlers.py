@@ -235,7 +235,10 @@ def tip_group(update: Update, context: CallbackContext):
     )
     context.bot.send_message(
         chat_id=user.bot_chat_id,
-        text=get_loc(user.language).get('award_received_text').format(geocash=geocash),
+        text=get_loc(user.language).get('award_received_text').format(
+            geocash=geocash,
+            description=description,
+        ),
         parse_mode='HTML'
     )
 
@@ -271,7 +274,9 @@ def tip_confirm(update: Update, context: CallbackContext):
 
     context.bot.send_message(
         chat_id=user.bot_chat_id,
-        text=get_loc(user.language).get('award_received_text').format(geocash=geocash),
+        text=get_loc(user.language).get('award_received_text').format(
+            geocash=geocash, description=description
+        ),
         parse_mode='HTML'
     )
 
