@@ -20,7 +20,7 @@ class User(BaseModel):
     language = peewee.CharField(null=True)
     wallet = peewee.CharField(null=True)
 
-    def create_or_get(user_id, username, full_name, bot_chat_id=None):
+    def create_or_get(user_id, username, full_name, bot_chat_id):
         user = User.get_or_none(User.user_id == user_id)
         if user is None:
             return User.create(
