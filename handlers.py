@@ -233,7 +233,7 @@ def tip_group(update: Update, context: CallbackContext):
         user_id=from_user.id,
         username=from_user.username,
         full_name=from_user.full_name,
-        bot_chat_id=from_user.id
+        bot_chat_id=None
     )
 
     user.create_award(geocash=geocash, description=description)
@@ -248,14 +248,16 @@ def tip_group(update: Update, context: CallbackContext):
         reply_markup=ReplyKeyboardRemove(),
         parse_mode='HTML'
     )
-    context.bot.send_message(
-        chat_id=user.bot_chat_id,
-        text=get_loc(user.language).get('award_received_text').format(
-            geocash=geocash,
-            description=description,
-        ),
-        parse_mode='HTML'
-    )
+
+    if user.bot_chat_id is not None:
+        context.bot.send_message(
+            chat_id=user.bot_chat_id,
+            text=get_loc(user.language).get('award_received_text').format(
+                geocash=geocash,
+                description=description,
+            ),
+            parse_mode='HTML'
+        )
 
     update.effective_message.delete()
     return -1

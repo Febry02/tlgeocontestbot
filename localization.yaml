@@ -42,7 +42,7 @@
     Something has gone wrong. Try again.
 
   could_not_recognize_text: |
-    I couldn\'t recognize you. Please, send <b>/start</b>.
+    I couldn't recognize you. Please, send <b>/start</b>.
 
   wallet_not_provided_text: |
     It seems you don't provide us your wallet address. Please, send <b>/wallet</b>.
