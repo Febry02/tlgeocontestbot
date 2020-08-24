@@ -108,7 +108,10 @@ def withdraw(update: Update, context: CallbackContext):
             geocash=geocash,
             wallet=user.wallet
         ),
-        reply_markup=ReplyKeyboardMarkup.from_column([KeyboardButton('Yes'), KeyboardButton('No')]),
+        reply_markup=ReplyKeyboardMarkup.from_column(
+            button_column=[KeyboardButton('Yes'), KeyboardButton('No')],
+            resize_keyboard=True
+        ),
         parse_mode='HTML'
     )
 
@@ -129,6 +132,7 @@ def withdraw_confirm(update: Update, context: CallbackContext):
 
     update.effective_chat.send_message(
         text=get_loc(user.language).get('withdraw_success_text'),
+        reply_markup=ReplyKeyboardRemove(),
         parse_mode='HTML'
     )
     return -1
