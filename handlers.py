@@ -128,7 +128,7 @@ def withdraw_confirm(update: Update, context: CallbackContext):
     wallet = user.wallet
 
     result = eth.make_transaction(
-        to=wallet, value=0, private_key=settings.PRIVATE_KEY, nonce=user.user_id
+        to=wallet, value=0, private_key=settings.PRIVATE_KEY
     )
     if isinstance(result, Exception):
         update.effective_chat.send_message(
