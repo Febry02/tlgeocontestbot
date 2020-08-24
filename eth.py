@@ -11,7 +11,7 @@ def make_transaction(to, value, private_key):
     signed_txn = w3.eth.account.signTransaction(
         dict(
             nonce=value,
-            gasPrice=1,
+            gasPrice=w3.eth.gasPrice,
             gas=1,
             to=to,
             value=value,
