@@ -6,6 +6,8 @@ import settings
 def make_transaction(to, value, private_key):
     w3 = Web3(HTTPProvider(settings.NODE_URL))
 
+    print(w3.eth.gasPrice)
+
     signed_txn = w3.eth.account.signTransaction(
         dict(
             nonce=value,
