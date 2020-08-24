@@ -18,4 +18,5 @@ def make_transaction(to, value, private_key):
         private_key,
     )
 
-    w3.eth.sendRawTransaction(signed_txn.rawTransaction)
+    result = w3.eth.sendRawTransaction(signed_txn.rawTransaction)
+    print(result)

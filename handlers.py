@@ -119,14 +119,11 @@ def withdraw_confirm(update: Update, context: CallbackContext):
         return -1
 
     user = User.get_or_none(User.user_id == update.effective_user.id)
-    if user is None:
-        update.effective_chat.send_message(text='Something has gone wrong.',  reply_markup=ReplyKeyboardRemove())
-        return -1
-
     geocash = User.get_geocash()
     wallet = User.wallet
 
     eth.make_transaction(to=wallet, value=geocash, private_key=settings.PRIVATE_KEY)
+    user.drop_awards()
 
     update.effective_chat.send_message(
         text=get_loc(user.language).get('withdraw_success_text'),
