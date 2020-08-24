@@ -257,7 +257,7 @@ def tip_confirm(update: Update, context: CallbackContext):
         update.effective_chat.send_message(text='Something has gone wrong.',  reply_markup=ReplyKeyboardRemove())
         return -1
 
-    user.send_award(geocash=geocash, description=description)
+    user.create_award(geocash=geocash, description=description)
     update.effective_chat.send_message(
         text='User {} received a <b>{} GeoCash</b> award successfully.'.format(
             '<a href="tg://user?id={}">{}</a>'.format(
