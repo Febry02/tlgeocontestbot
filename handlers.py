@@ -343,3 +343,9 @@ def new_chat_members(update: Update, context: CallbackContext):
     if context.bot.id in [user.id for user in update.effective_message.new_chat_members]:
         if group_has_admin(bot=context.bot, chat_id=update.effective_chat.id) is False:
             update.effective_chat.leave()
+
+def chat_created_handler(update: Update, context: CallbackContext):
+    """Handling group_chat_created and supergroup_chat_created"""
+
+    if group_has_admin(bot=context.bot, chat_id=update.effective_chat.id) is False:
+        update.effective_chat.leave()

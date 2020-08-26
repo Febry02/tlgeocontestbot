@@ -21,6 +21,8 @@ def main():
     dp.add_handler(MessageHandler(
         filters=Filters.status_update.new_chat_members, callback=handlers.new_chat_members))
     dp.add_handler(MessageHandler(
+        filters=Filters.status_update.chat_created, callback=handlers.chat_created_handler))
+    dp.add_handler(MessageHandler(
         filters=Filters.document & Filters.forwarded, callback=handlers.load_awards))
 
     dp.add_handler(CommandHandler(
