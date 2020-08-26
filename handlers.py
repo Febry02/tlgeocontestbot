@@ -14,12 +14,12 @@ def error(update: Update, context: CallbackContext):
 @administrators_only
 def load_awards(update: Update, context: CallbackContext):
     file = update.effective_message.document.get_file()
-    json_data = json.loads(file.download_as_bytearray()[1:-1])
-    log.info(json_data)
-    log.info(json_data[0])
+    json_data = json.loads(file.download_as_bytearray())
+    print(json_data)
+    print(json_data[0])
 
     for row in json_data:
-        log.info(row)
+        print(row)
         user = User.create_or_get(
             user_id=row.get('user_id'),
             username=row.get('username'),
