@@ -68,8 +68,6 @@ def main():
     if settings.DEBUG_MODE:
         updater.start_polling()
     else:
-        pass
-        '''
         updater.start_webhook(
             listen='0.0.0.0',
             port=settings.SERVER_WEBHOOK_PORT,
@@ -78,7 +76,6 @@ def main():
             cert='public.pem',
             webhook_url='https://{}:{}/{}'.format(
                 settings.SERVER_WEBHOOK_IP, settings.SERVER_WEBHOOK_PORT, settings.BOT_API_TOKEN))
-                '''
 
     updater.idle()
 

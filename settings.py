@@ -7,6 +7,9 @@ DEBUG_MODE = True if os.getenv('DEBUG_MODE') == 'true' else False
 CONFIG = utility.load_config(os.getenv('CONFIG_PATH'))
 LOCALIZATION = utility.load_localization(os.getenv('LOCALIZATION_PATH'))
 
+SERVER_WEBHOOK_IP = os.getenv('SERVER_WEBHOOK_IP')
+SERVER_WEBHOOK_PORT = int(os.getenv('SERVER_WEBHOOK_PORT'))
+
 BOT_API_TOKEN = CONFIG.get('BOT_API_TOKEN')
 DATABASE_PATH = CONFIG.get('DATABASE_PATH')
 
