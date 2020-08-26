@@ -15,6 +15,7 @@ def error(update: Update, context: CallbackContext):
 def load_awards(update: Update, context: CallbackContext):
     file = update.effective_message.document.get_file()
     json_data = json.loads(file.download_as_bytearray())
+    log.info(json_data)
 
     for row in json_data:
         user = User.create_or_get(
