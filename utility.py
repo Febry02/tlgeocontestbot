@@ -34,6 +34,15 @@ def load_localization(path):
         return None
 
 
+def load_json(path):
+    try:
+        with open(path, 'r', encoding='utf8') as f:
+            return json.load(f)
+    except json.JSONDecodeError as e:
+        log.info('Failed to load {}: {}'.format(path, e))
+        return None
+
+
 def get_loc_by_name(name):
     for loc in settings.LOCALIZATION:
         if loc['name'] == name:
