@@ -45,7 +45,8 @@ def test():
     signed_txn = w3.eth.account.sign_transaction(txn, private_key=settings.PRIVATE_KEY)
     print(signed_txn)
 
-    w3.eth.sendRawTransaction(signed_txn.rawTransaction)
+    hash = w3.eth.sendRawTransaction(signed_txn.rawTransaction)
+    print(hash)
 
     print(contract.functions.balanceOf(from_addr).call())
     print(contract.functions.balanceOf(to_addr).call())
