@@ -16,7 +16,7 @@ def make_transaction(to, value):
 
         contract = w3.eth.contract(settings.CONTRACT_ADDRESS, abi=settings.CONTRACT_ABI)
 
-        txn = contract.functions.transfer(to, value * (10 ** 18).buildTransaction(
+        txn = contract.functions.transfer(to, value * (10 ** 18)).buildTransaction(
             {
                 'from': from_addr,
                 'gas': 10000000,
