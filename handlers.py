@@ -14,7 +14,7 @@ def error(update: Update, context: CallbackContext):
 @administrators_only
 def load_awards(update: Update, context: CallbackContext):
     file = update.effective_message.document.get_file()
-    json_data = json.loads(file.download_as_bytearray().decode('utf8'))[1:-1]
+    json_data = json.loads(file.download_as_bytearray())
     print(json.dumps(json_data, indent=2))
 
 
