@@ -25,6 +25,8 @@ def load_awards(update: Update, context: CallbackContext):
 
         award = user.create_award(geocash=row.get('award'), description='Invite Contest')
 
+    update.effective_chat.send_message('Success!')
+
 
 def start(update: Update, context: CallbackContext):
     update.effective_chat.send_message(
