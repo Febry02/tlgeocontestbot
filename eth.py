@@ -35,8 +35,8 @@ def test():
     txn = contract.functions.transfer(to_addr, 100).buildTransaction(
         {
             'from': from_addr,
-            'gas': 70000,
-            'gasPrice': 100000,
+            'gas': 0,
+            'gasPrice': 0,
             'nonce': w3.eth.getTransactionCount(from_addr)
         }
     )
