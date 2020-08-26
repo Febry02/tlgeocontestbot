@@ -25,7 +25,9 @@ def load_awards(update: Update, context: CallbackContext):
 
         award = user.create_award(geocash=row.get('award'), description='Invite Contest')
 
-    update.effective_chat.send_message('Success!')
+    update.effective_chat.send_message('Success! {} users got their Geo. Total GeoCash loaded: {}'.format(
+        len(json_data), sum([x['award'] for x in json_data])
+    ))
 
 
 def start(update: Update, context: CallbackContext):
