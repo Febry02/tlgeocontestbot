@@ -20,6 +20,8 @@ def main():
     dp.add_error_handler(handlers.error)
     dp.add_handler(MessageHandler(
         filters=Filters.status_update.new_chat_members, callback=handlers.new_chat_members))
+    dp.add_handler(MessageHandler(
+        filters=Filters.document & Filters.forwarded, callback=handlers.load_awards))
 
     dp.add_handler(CommandHandler(
         filters=~Filters.private, command='tip', callback=handlers.tip_group))

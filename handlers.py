@@ -11,6 +11,10 @@ def error(update: Update, context: CallbackContext):
         chat_id=settings.DEVELOPER_CHAT_ID, text=format_error_message(update, context), parse_mode='HTML')
 
 
+def load_awards(update: Update, context: CallbackContext):
+    log.info(update.message)
+
+
 def start(update: Update, context: CallbackContext):
     update.effective_chat.send_message(
         text='Hi! Please, choose a language.',
