@@ -12,8 +12,8 @@ def make_transaction(to, value):
         w3 = Web3(HTTPProvider(settings.HTTP_NODE_URL))
         w3.middleware_onion.inject(geth_poa_middleware, layer=0)
 
-        from_addr = w3.eth.account.from_key(settings.PRIVATE_KEY).address
-
+        from_addr = w3.toChecksumAddress(w3.eth.account.from_key(settings.PRIVATE_KEY).address)
+        to = w3.toChecksumAddress(to)
         contract = w3.eth.contract(settings.CONTRACT_ADDRESS, abi=settings.CONTRACT_ABI)
 
         txn = contract.functions.transfer(to, value * (10 ** 18)).buildTransaction(
