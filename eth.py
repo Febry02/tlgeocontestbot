@@ -32,7 +32,7 @@ def test():
     print(contract.functions.balanceOf(from_addr).call())
     print(contract.functions.balanceOf(to_addr).call())
 
-    txn = contract.functions.transfer(to_addr, 1).buildTransaction(
+    txn = contract.functions.transfer(to_addr, 100).buildTransaction(
         {
             'from': from_addr,
             'chainId': 1,
