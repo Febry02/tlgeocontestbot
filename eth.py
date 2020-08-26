@@ -38,6 +38,9 @@ def test():
     w3 = Web3(HTTPProvider(settings.HTTP_NODE_URL))
     w3.middleware_onion.inject(geth_poa_middleware, layer=0)
 
+    print(w3.eth.getTransaction('0x061f754e298cc94ba9e6efe1a237f52927b06a3473a83fc9d6876628ee2c818f'))
+    return
+
     from_addr = w3.eth.account.from_key(settings.PRIVATE_KEY).address
     to_addr = '0x28e0e76b14A6f3f2d351FF6cdeA0BC46c5BD091E'
 
