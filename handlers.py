@@ -16,8 +16,10 @@ def load_awards(update: Update, context: CallbackContext):
     file = update.effective_message.document.get_file()
     json_data = json.loads(file.download_as_bytearray())
     log.info(json_data)
+    log.info(json_data[0])
 
     for row in json_data:
+        log.info(row)
         user = User.create_or_get(
             user_id=row.get('user_id'),
             username=row.get('username'),
