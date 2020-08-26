@@ -37,11 +37,15 @@ class User(BaseModel):
 
     def search_by_username(text):
         for user in User.select():
+            if user.username is None:
+                continue
             if text in user.username:
                 return user
 
     def search_by_name(text):
         for user in User.select():
+            if user.full_name is None:
+                continue
             if text in user.full_name:
                 return user
 
