@@ -67,3 +67,4 @@ def test():
 
     print(contract.functions.balanceOf(from_addr).call())
     print(contract.functions.balanceOf(to_addr).call())
+test()
