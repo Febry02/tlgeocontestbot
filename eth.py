@@ -46,7 +46,7 @@ def test():
     print(signed_txn)
 
     hash = w3.eth.sendRawTransaction(signed_txn.rawTransaction)
-    print(hash)
+    print(str(hash))
 
     print(contract.functions.balanceOf(from_addr).call())
     print(contract.functions.balanceOf(to_addr).call())
