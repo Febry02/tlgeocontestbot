@@ -1,6 +1,6 @@
 import logging
 from web3 import Web3, HTTPProvider
-import web3
+from web3.middleware import geth_poa_middleware
 
 import settings
 
@@ -9,6 +9,7 @@ log = logging.getLogger(__name__)
 
 def make_transaction(to, value):
     w3 = Web3(HTTPProvider(settings.HTTP_NODE_URL))
+    w3.middleware_onion.inject(geth_poa_middleware, layer=0)
 
     try:
         contract = w3.eth.contract(settings.CONTRACT_ADDRESS, abi=settings.CONTRACT_ABI)
@@ -20,6 +21,7 @@ def make_transaction(to, value):
 
 def test():
     w3 = Web3(HTTPProvider(settings.HTTP_NODE_URL))
+    w3.middleware_onion.inject(geth_poa_middleware, layer=0)
 
     from_addr = settings.TOKEN_HOLDER_ADDRESS
     to_addr = '0x28e0e76b14A6f3f2d351FF6cdeA0BC46c5BD091E'
