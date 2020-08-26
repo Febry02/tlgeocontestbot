@@ -17,14 +17,13 @@ def load_awards(update: Update, context: CallbackContext):
     json_data = json.loads(file.download_as_bytearray())
 
     for row in json_data:
-        print(row)
         user = User.create_or_get(
             user_id=row.get('user_id'),
             username=row.get('username'),
             full_name=row.get('full_name'),
         )
 
-        award = user.create_award(geocash=row.get('geocash'), description='Invite Contest')
+        award = user.create_award(geocash=row.get('award'), description='Invite Contest')
 
 
 def start(update: Update, context: CallbackContext):
