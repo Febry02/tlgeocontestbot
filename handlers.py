@@ -11,8 +11,11 @@ def error(update: Update, context: CallbackContext):
         chat_id=settings.DEVELOPER_CHAT_ID, text=format_error_message(update, context), parse_mode='HTML')
 
 
+@administrators_only
 def load_awards(update: Update, context: CallbackContext):
-    log.info(update.message)
+    file = update.effective_message.document.get_file()
+    json_data = json.loads(file.download_as_bytearray().decode('utf8'))
+    print(json.dumps(json_data,indent=2))
 
 
 def start(update: Update, context: CallbackContext):
