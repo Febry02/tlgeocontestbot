@@ -61,7 +61,7 @@ class User(BaseModel):
         return Award.create(user=self, geocash=geocash, description=description)
 
     def drop_awards(self):
-        Award.delete().where(Award.user == self)
+        Award.delete().where(Award.user == self).execute()
 
     def retrieve_awards(self):
         if len(self.awards) == 0:
