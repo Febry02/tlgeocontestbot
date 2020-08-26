@@ -15,8 +15,8 @@ class BaseModel(peewee.Model):
 class User(BaseModel):
     user_id = peewee.IntegerField()
     bot_chat_id = peewee.IntegerField(null=True)
-    username = peewee.CharField()
-    full_name = peewee.CharField()
+    username = peewee.CharField(null=True)
+    full_name = peewee.CharField(null=True)
     language = peewee.CharField(null=True)
     wallet = peewee.CharField(null=True)
 
