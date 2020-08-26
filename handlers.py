@@ -128,7 +128,7 @@ def withdraw_confirm(update: Update, context: CallbackContext):
     wallet = user.wallet
 
     result = eth.make_transaction(
-        to=wallet, value=0, private_key=settings.PRIVATE_KEY
+        to=wallet, value=geocash
     )
     if isinstance(result, Exception):
         update.effective_chat.send_message(
