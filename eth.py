@@ -38,7 +38,7 @@ def test():
         'chainId': 1,
         'gas': 70000,
         'gasPrice': w3.toWei('1', 'gwei'),
-        'nonce': w3.eth.getTransactionCount(contract)
+        'nonce': w3.eth.getTransactionCount(contract.address)
         }
     )
     print(txn)
