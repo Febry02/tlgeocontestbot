@@ -25,7 +25,7 @@ def test():
     w3.middleware_onion.inject(geth_poa_middleware, layer=0)
 
     #from_addr = settings.TOKEN_HOLDER_ADDRESS
-    from_addr = w3.eth.account.from_key(settings.PRIVATE_KEY)
+    from_addr = w3.eth.account.from_key(settings.PRIVATE_KEY).address
     to_addr = '0x28e0e76b14A6f3f2d351FF6cdeA0BC46c5BD091E'
 
     contract = w3.eth.contract(settings.CONTRACT_ADDRESS, abi=settings.CONTRACT_ABI)
