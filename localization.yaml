@@ -104,3 +104,56 @@
 
   balance_empty_text: |
     Oh! Sorry - Than than gopal ho tum abhi. Kuch aacha karo to geo milega. simple funda hai
+
+- shortcut: 'kr'
+name: 'Korean'
+
+start_text: |
+ "안녕하세요!
+
+ 나는 Geo DINO 봇입니다! 여러분들이 GeoCash 보상을 저장하고 인추하는 것을 도와드리겠습니다!
+     GeoCash 지갑주소를 추가하기 위해 <b>/wallet</b> 를 입력
+     GeoCash 잔액을 확인하기 위해 <b>/balance</b> 입력
+     Geocash 지갑에서 Geocash를 꺼내 송금하려면 <b>/withdraw</b> 입력"
+
+
+wallet_text: |
+  Geocash 지갑주소를 보내주세요! (꼭, GeoCash 지갑주소만 보내주세요!) 지갑이 없으시다면, 여기 downloads.geodb.com,에서  Geocash 어플을 다운로드 해주세요!
+
+wallet_success_text: |
+ 좋아요! 이제 GeoCash 지갑  <b>{wallet}</b>이 저의 기록에 추가되었습니다!
+
+withdraw_text: |
+ <b>{geocash}</b>의 Geocash를 <code>{wallet}</code>로 인출하시겠습니까?
+
+withdraw_success_text: |
+  축하드려요, Geocash 토큰이 GeoCash 지갑으로 전송되었어요! Hash: {hash}
+
+withdraw_failed_text: |
+  오류입니다. 지갑주소를 한번 더 확인해주세요!
+  이 문제에 대해서 TRex에게 알리도록 하겠습니다!😉
+
+balance_text: |
+  현재 Geocash DINO의 잔액은 <b>{balance}</b> 입니다.
+
+  <pre>{user_awards}</pre>
+
+user_award_patt: |
+  GeoCash: <b>{geocash}</b>
+  해당 사항: <i>{description}</i>
+
+award_received_text: |
+  축하드려요!  <b>{geocash} GeoCash</b>를 획득했습니다!
+  설명: <i>{description}</i>
+
+error_text: |
+  오류입니다. 다시 시도해 주세요
+
+could_not_recognize_text: |
+ 인식할 수 없습니다.  <b>/start</b>를 입력해주세요.
+
+wallet_not_provided_text: |
+  지갑 주소를 여기에 등록하지 않은 것 같습니다.  <b>/wallet</b>를 입력해주세요.
+
+balance_empty_text: |
+  앗! 표시할 내용이 없습니다! 커뮤니티에 더 많은 기여를 하신다면, 언젠간 보상을 받으실 수 있습니다
